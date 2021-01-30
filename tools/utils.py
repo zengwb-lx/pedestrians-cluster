@@ -312,3 +312,18 @@ def read_meta(fn_meta, start_pos=0, verbose=True):
     if verbose:
         print('[{}] #cls: {}, #inst: {}'.format(fn_meta, cls_num, inst_num))
     return lb2idxs, idx2lb
+
+
+def get_path():
+    root_path = '/media/zengwb/PC/Dataset/ReID-dataset/channel1/provate3'
+    images = os.listdir(root_path)
+    picture_path = [os.path.join(root_path, image) for image in images]
+    a = {}
+    for i in range(len(picture_path)):
+        a[i] = picture_path[i]
+    f = open('./pic_path', 'w')
+    json.dump(a, f)
+
+
+if __name__ == '__main__':
+    get_path()

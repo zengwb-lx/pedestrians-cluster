@@ -189,7 +189,7 @@ def cluster_by_infomap(nbrs, dists, args):
 
     # 保存聚类结果
     if eval(args.save_result):
-        with open(args.pred_label_path, 'w') as of:
+        with open('pred_label_path.txt', 'w') as of:
             for idx in range(idx_len):
                 of.write(str(idx2label[idx]) + '\n')
 
@@ -204,7 +204,7 @@ def cluster_by_infomap(nbrs, dists, args):
     # 归档图片
     if args.output_picture_path is not None:
         print("=> Start copy pictures to the output path {} ......".format(args.output_picture_path))
-        with open('data/tmp/pic_path', 'r') as f:
+        with open('./tools/pic_path', 'r') as f:
             content = f.read()
             picture_path_dict = json.loads(content)
         mkdir_if_no_exist(args.output_picture_path)
@@ -212,17 +212,18 @@ def cluster_by_infomap(nbrs, dists, args):
         os.mkdir(args.output_picture_path)
         tmp_pth = 'data/input_pictures/alldata'
         for label, idxs in label2idx.items():
+            print('---------------------------', label, idxs)
             picture_reuslt_path = args.output_picture_path + '/' + str(label)
             mkdir_if_no_exist(picture_reuslt_path)
             for idx in idxs:
                 picture_path = picture_path_dict[str(idx)]
                 shutil.copy(picture_path, picture_reuslt_path)
-                shutil.copy(picture_path, tmp_pth)
+                # shutil.copy(picture_path, tmp_pth)
 
 
 def get_dist_nbr(features, args):
     # features = np.fromfile(feature_path, dtype=np.float32)
-    features = features.reshape(-1, 256)
+    features = features.reshape(-1, 2048)
     features = l2norm(features)
 
     index = knn_faiss(feats=features, k=args.k, knn_method=args.knn_method)

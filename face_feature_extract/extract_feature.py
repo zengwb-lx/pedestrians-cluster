@@ -2,7 +2,7 @@ import argparse
 import os
 import numpy as np
 import time
-
+import json
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
@@ -121,3 +121,5 @@ def extract(test_loader, model):
 
 if __name__ == '__main__':
     features = extract_fature(input_picture_path='../data/input_pictures/data_sample')
+    # get_path()
+
